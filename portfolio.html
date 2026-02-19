@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ads AI - Scale Your Brand</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* =========================================
+           1. GENERAL RESET & VARIABLES
+           ========================================= */
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling effect */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-color: #fff;
+        }
+
+        a { transition: all 0.3s ease; }
+        a:hover, a:focus { text-decoration: none; outline: none; }
+        img { max-width: 100%; height: auto; }
+
+        :root {
+            /* Exact Orange from your image */
+            --primary-orange: #F45B26; 
+            --dark-bg: #121212;
+            --light-bg: #FFFFFF;
+            --text-grey: #a0a0a0;
+            --text-dark: #1F1F1F;
+        }
+
+        /* Container with 5% side spacing on Desktop */
+        .custom-container {
+            width: 100%;
+            padding-left: 5%;
+            padding-right: 5%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* =========================================
+           2. NAVBAR STYLES
+           ========================================= */
+        .navbar-custom {
+            background-color: rgba(18, 18, 18, 0.98);
+            border: none;
+            padding: 15px 0;
+            transition: background 0.3s;
+        }
+        
+        .navbar-brand {
+            padding: 5px 15px;
+            height: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Logo Size */
+        .logo-img { height: 60px; width: auto; }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #ccc;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 20px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .navbar-inverse .navbar-nav > li > a:hover { color: var(--primary-orange); }
+        .navbar-inverse .navbar-toggle { border-color: #fff; margin-top: 18px; } 
+        .navbar-inverse .navbar-toggle .icon-bar { background-color: #fff; }
+        .navbar-inverse .navbar-toggle:hover { background-color: var(--primary-orange); }
+
+        /* =========================================
+           3. SCROLL FIX (THE SOLUTION)
+           ========================================= */
+        /* This prevents the fixed navbar from covering section titles */
+        #home, #works, #services, #footer-contact {
+            scroll-margin-top: 90px; /* 80px navbar height + 10px breathing room */
+        }
+
+        /* =========================================
+           4. HERO / BANNER SECTION (Desktop)
+           ========================================= */
+        .hero-section {
+            background-color: var(--dark-bg);
+            min-height: 100vh; /* Full height on desktop */
+            color: white;
+            padding-top: 80px; 
+            padding-bottom: 40px; 
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center vertically and horizontally flex items */
+            text-align: center; /* Center text */
+        }
+
+        /* Desktop Font Size: 153px */
+        .hero-text h1 {
+            font-family: 'Staatliches', cursive;
+            font-weight: 400;
+            font-size: 153px; 
+            line-height: 0.9;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0px;
+        }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary-orange); /* Orange Outline */
+            display: block;
+        }
+        .solid-text {
+            color: var(--primary-orange); /* Solid Orange Fill */
+            display: block;
+        }
+
+        .hero-description { 
+            color: var(--text-grey); 
+            font-size: 18px; 
+            margin-bottom: 40px; 
+            margin-left: auto;  /* Center the block */
+            margin-right: auto; /* Center the block */
+            max-width: 800px;   /* Wider max-width for centered layout */
+            line-height: 1.6;
+            font-weight: 400; 
+        }
+        
+        /* Button Container to ensure centering */
+        .hero-btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-custom {
+            padding: 16px 45px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            margin: 0 10px 15px 10px; /* Centered margins */
+            font-size: 15px;
+            letter-spacing: 1px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-skew { transform: skew(-10deg); }
+        .btn-skew span { display: block; transform: skew(10deg); }
+        
+        .btn-primary-orange { background-color: var(--primary-orange); border: 2px solid var(--primary-orange); color: white; }
+        .btn-primary-orange:hover { background-color: transparent; color: var(--primary-orange); }
+        
+        .btn-outline-orange { background-color: transparent; border: 2px solid var(--primary-orange); color: var(--primary-orange); }
+        .btn-outline-orange:hover { background-color: var(--primary-orange); color: white; }
+
+        /* =========================================
+           5. OUR WORKS SECTION
+           ========================================= */
+        .works-section { padding: 60px 0; position: relative; background-color: #fff; }
+        .works-bg-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(#e0e0e0 1.5px, transparent 1.5px); background-size: 30px 30px; z-index: 1; pointer-events: none; }
+        .works-content { position: relative; z-index: 2; }
+        
+        .section-title { text-align: center; margin-bottom: 40px; } 
+        .section-title h2 { 
+            font-family: 'Staatliches', cursive;
+            font-weight: 400;
+            color: var(--primary-orange); 
+            text-transform: uppercase; 
+            border-bottom: 4px solid var(--primary-orange); 
+            padding-bottom: 5px; 
+            font-size: 64px; 
+            letter-spacing: 2px; 
+            display: inline-block; 
+        }
+
+        .nav-pills-container { display: block; text-align: center; margin-bottom: 40px; width: 100%; }
+        .custom-nav-pills { background-color: #fff0eb; border-radius: 60px; padding: 10px 20px; display: inline-block; list-style: none; margin: 0; position: relative; white-space: normal; }
+        .custom-nav-pills li { display: inline-block; float: none; margin: 5px; }
+        
+        .custom-nav-pills li a { 
+            color: #555; 
+            font-size: 15px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            padding: 12px 30px; 
+            border-radius: 40px; 
+            text-decoration: none; 
+            display: block; 
+            transition: all 0.3s ease; 
+            white-space: nowrap;
+            border: 2px solid var(--primary-orange); 
+        }
+
+        .custom-nav-pills li a:hover { color: var(--primary-orange); background-color: rgba(244, 91, 38, 0.1); }
+        .custom-nav-pills li.active a { background-color: #fff; color: var(--primary-orange); box-shadow: 0 5px 15px rgba(244, 91, 38, 0.15); }
+
+        /* =========================================
+           6. VIDEO CARD & HOVER EFFECTS
+           ========================================= */
+        .work-card {
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background-color: transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .work-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(244, 91, 38, 0.15); }
+        .work-card-link { display: block; text-decoration: none; }
+
+        .hover-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden; 
+            background-color: #eee;
+        }
+
+        .hover-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            z-index: 1;
+        }
+
+        .overlay-content {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(244, 91, 38, 0.9), rgba(0, 0, 0, 0.4)); 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            opacity: 0; 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            padding: 20px;
+            z-index: 2; 
+        }
+        
+        .work-card:hover .overlay-content { opacity: 1; }
+
+        .overlay-content h4 { 
+            font-family: 'Staatliches', cursive;
+            color: #fff; 
+            font-weight: 400; 
+            font-size: 32px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin: 0 0 5px 0; 
+            transform: translateY(30px); 
+            transition: transform 0.4s ease 0.1s; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .overlay-content p { color: #fff; font-size: 14px; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 1px; transform: translateY(30px); transition: transform 0.4s ease 0.2s; font-family: 'Montserrat', sans-serif; opacity: 0.9; }
+        .work-card:hover h4, .work-card:hover p { transform: translateY(0); }
+        
+        .overlay-content .play-icon { font-size: 60px; color: #fff; margin-bottom: 15px; transform: scale(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .work-card:hover .play-icon { transform: scale(1); }
+
+        /* =========================================
+           7. LIGHTBOX MODAL
+           ========================================= */
+        .lightbox-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .lightbox-content { position: relative; margin: auto; padding: 0; width: 85%; max-width: 1100px; top: 50%; transform: translateY(-50%); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; border-radius: 12px; box-shadow: 0 0 80px rgba(244, 91, 38, 0.2); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 50px; font-weight: 300; cursor: pointer; transition: 0.3s; z-index: 10001; line-height: 1; }
+        .lightbox-close:hover { color: var(--primary-orange); transform: rotate(90deg); }
+        .lightbox-prev, .lightbox-next { cursor: pointer; position: absolute; top: 50%; width: 60px; height: 60px; margin-top: -30px; color: rgba(255,255,255,0.5); font-weight: bold; font-size: 30px; transition: 0.3s ease; border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none; z-index: 10000; background: rgba(255,255,255,0.1); }
+        .lightbox-next { right: 30px; }
+        .lightbox-prev { left: 30px; }
+        .lightbox-prev:hover, .lightbox-next:hover { background-color: var(--primary-orange); color: #fff; transform: scale(1.1); }
+
+        /* =========================================
+           8. SERVICES SECTION
+           ========================================= */
+        .services-section { 
+            padding: 0; 
+            background: repeating-linear-gradient(45deg, #fcfcfc, #fcfcfc 10px, #f2f5f9 10px, #f2f5f9 20px); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .services-container-bg { 
+            background-color: #fff; 
+            padding: 60px 10%; 
+            border-radius: 0; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.01); 
+        }
+        
+        .service-header { text-align: center; margin-bottom: 40px; }
+        .service-header h2 { font-family: 'Staatliches', cursive; font-weight: 400; font-size: 52px; color: #1a1a2e; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; }
+        .service-header p { font-size: 16px; color: #777; max-width: 700px; margin: 0 auto; }
+        
+        .service-item { margin-bottom: 30px; position: relative; min-height: 1px; }
+        .service-img { background-color: #f5f5f5; height: 240px; border-radius: 12px; margin-bottom: 25px; width: 100%; transition: transform 0.3s; }
+        .service-item:hover .service-img { transform: scale(1.02); }
+        .service-text h4 { font-weight: 800; font-size: 22px; color: #1a1a2e; margin-bottom: 10px; }
+        .service-text p { font-size: 15px; color: #666; line-height: 1.6; position: relative; z-index: 2; }
+        .watermark-number { position: absolute; bottom: -35px; right: 15px; font-size: 120px; font-weight: 900; color: #f7f7f7; line-height: 1; z-index: 1; user-select: none; pointer-events: none; font-family: 'Staatliches', cursive; opacity: 0.5; }
+
+        /* =========================================
+           9. FOOTER SECTION
+           ========================================= */
+        .footer-section { 
+            background-color: #121212; 
+            color: #a0a0a0; 
+            padding-top: 40px; 
+            padding-bottom: 30px; 
+            font-size: 14px; 
+            border-top: 1px solid #222; 
+        }
+        
+        .footer-logo img { height: 40px; width: auto; margin-bottom: 20px; }
+        .footer-divider { border-top: 1px solid #2a2a2a; margin-bottom: 40px; margin-top: 20px; }
+        .footer-heading { color: #fff; font-weight: 700; margin-bottom: 20px; font-size: 16px; font-family: 'Montserrat', sans-serif; }
+        
+        .footer-ul { list-style: none; padding: 0; margin: 0; }
+        .footer-ul li { margin-bottom: 12px; }
+        .footer-ul li a { color: #a0a0a0; text-decoration: none; transition: color 0.2s; }
+        .footer-ul li a:hover { color: var(--primary-orange); padding-left: 0; }
+        
+        .contact-info p { margin-bottom: 15px; display: flex; align-items: flex-start; line-height: 1.6; color: #a0a0a0; }
+        .contact-info i { color: #fff; margin-right: 12px; margin-top: 4px; width: 15px; font-size: 14px; }
+        .contact-info a { color: #a0a0a0; text-decoration: none; }
+        .contact-info a:hover { color: var(--primary-orange); }
+        
+        .footer-search-wrapper {
+            background-color: #fff;
+            border-radius: 50px; 
+            padding: 4px; 
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+        }
+        .footer-search-icon {
+            padding-left: 15px;
+            padding-right: 10px;
+            color: #333;
+            font-size: 16px;
+        }
+        .footer-search-input {
+            border: none;
+            box-shadow: none;
+            outline: none;
+            background: transparent;
+            flex-grow: 1;
+            color: #333;
+            font-size: 14px;
+            height: 40px;
+        }
+        .footer-search-input:focus { box-shadow: none; outline: none; }
+        .footer-search-btn {
+            background-color: var(--primary-orange);
+            color: #fff;
+            border: none;
+            border-radius: 50px; 
+            padding: 0 30px;
+            height: 40px;
+            font-weight: 600;
+            text-transform: capitalize;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .footer-search-btn:hover { background-color: #d64d20; }
+        
+        .social-icons { margin-top: 25px; }
+        .social-icons a { color: #fff; font-size: 18px; margin-right: 15px; text-decoration: none; transition: all 0.3s; display: inline-block; }
+        .social-icons a:hover { color: var(--primary-orange); transform: translateY(-3px); }
+        
+        .copyright-area { border-top: 1px solid #2a2a2a; margin-top: 50px; padding-top: 25px; font-size: 13px; color: #666; }
+
+        /* =========================================
+           10. RESPONSIVENESS & MOBILE OPTIMIZATION
+           ========================================= */
+        @media (max-width: 1200px) {
+            .hero-text h1 { font-size: 100px; }
+        }
+        
+        /* Mobile Devices (Under 991px) */
+        @media (max-width: 991px) {
+            .logo-img { height: 45px; }
+            .hero-section { 
+                text-align: center; 
+                padding-top: 100px; 
+                padding-bottom: 30px; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center;
+                min-height: 50vh; /* Set to Half Screen height on mobile */
+            }
+            .hero-text h1 { font-size: 45px; line-height: 1.1; margin-top: 10px; margin-bottom: 15px; }
+            .outline-text { -webkit-text-stroke: 1px var(--primary-orange); }
+            .hero-description { margin: 0 auto 15px auto; padding: 0 10px; font-size: 13px; line-height: 1.4; }
+            .btn-custom { width: 100%; max-width: 280px; margin: 5px auto; display: block; padding: 10px 15px; font-size: 13px; }
+            
+            .works-section { padding: 30px 0; }
+            .section-title { margin-bottom: 20px; }
+            .section-title h2 { font-size: 32px; }
+            .nav-pills-container { margin-bottom: 20px; height: auto; }
+            .custom-nav-pills { width: 100%; border-radius: 25px; padding: 8px; }
+            .custom-nav-pills li { display: inline-block; margin: 2px; }
+            .custom-nav-pills li a { padding: 6px 10px; font-size: 10px; }
+            .work-card { margin-bottom: 15px; }
+
+            .services-container-bg { padding: 40px 20px; } 
+            .service-header h2 { font-size: 28px; margin-bottom: 10px; }
+            .service-header p { font-size: 13px; }
+            .service-item { margin-bottom: 20px; }
+            .service-img { height: 160px; }
+            .service-text h4 { font-size: 18px; }
+            .service-text p { font-size: 13px; }
+
+            .footer-section { padding-top: 30px; padding-bottom: 20px; font-size: 12px; }
+            .footer-col { margin-bottom: 30px; }
+            .copyright-area { margin-top: 15px; padding-top: 15px; text-align: left; }
+            .custom-container { padding-left: 15px; padding-right: 15px; }
+        }
+
+        @media (max-width: 767px) {
+            .hero-text h1 { font-size: 36px; }
+            .lightbox-close { top: 15px; right: 15px; font-size: 30px; }
+            .lightbox-prev, .lightbox-next { width: 35px; height: 35px; font-size: 18px; margin-top: -17px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+        <div class="custom-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#home">
+                    <img src="assets/images/logo.png" alt="Ads AI Logo" class="logo-img">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#works">Portfolio</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#footer-contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero-section">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 hero-text">
+                    <h1>
+                        <span class="outline-text">SCALE YOUR</span>
+                        <span class="solid-text">BRAND WITH AI VIDEO</span>
+                    </h1>
+                    <p class="hero-description">
+                        Create impactful advertising films, AI-driven videos, corporate films, and social media video ads designed to engage audiences and deliver measurable results.
+                    </p>
+                    <div class="hero-btn-container">
+                        <a href="#services" class="btn btn-custom btn-primary-orange btn-skew"><span>Explore Our Services</span></a>
+                        <a href="#footer-contact" class="btn btn-custom btn-outline-orange btn-skew"><span>Contact Us</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="works" class="works-section">
+        <div class="works-bg-pattern"></div>
+        
+        <div class="custom-container works-content">
+            <div class="section-title">
+                <h2>Our Works</h2>
+            </div>
+            
+            <div class="nav-pills-container">
+                <ul class="custom-nav-pills nav">
+                    <li class="active"><a data-toggle="tab" href="#all">All</a></li>
+                    <li><a data-toggle="tab" href="#adfilms">Ad Films</a></li>
+                    <li><a data-toggle="tab" href="#aifilms">AI Films</a></li>
+                    <li><a data-toggle="tab" href="#promo">Promotional</a></li>
+                    <li><a data-toggle="tab" href="#corporate">Corporate</a></li>
+                    <li><a data-toggle="tab" href="#explainers">Explainers</a></li>
+                    <li><a data-toggle="tab" href="#docs">Documentaries</a></li>
+                    <li><a data-toggle="tab" href="#social">Social Media</a></li>
+                </ul>
+            </div>
+            
+            <div class="tab-content">
+                <div id="all" class="tab-pane fade in active">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924403?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (18).png" alt="Cinematic Clip"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Cinematic Clip</h4><p>Commerical</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924373?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (25).png" alt="Lifestyle Ad"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Lifestyle Ad</h4><p>Commercial</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924440?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (7).png" alt="Ladybird"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Ladybird</h4><p>Nature Doc</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924464?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (2).png" alt="Prathi Sarees"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Prathi Sarees</h4><p>Fashion</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924504?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (5).png" alt="Event Highlight"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Event Highlight</h4><p>Coverage</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925325?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1.png" alt="Defender"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Defender</h4><p>Ad Film</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150617315?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (9).png" alt="iPhone Concept"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>iPhone Concept</h4><p>Tech Ad</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925789?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (11).png" alt="Pepsi"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pepsi</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924971?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (31).png" alt="Baskin Robbins"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baskin Robbins</h4><p>Ad Film</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924915?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (32).png" alt="Baggit"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baggit</h4><p>Fashion</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925252?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (30).png" alt="Deeponde Serum"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Deeponde Serum</h4><p>Cosmetics</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925887?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (3).png" alt="Pizza"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pizza</h4><p>Ad Film</p></div></div></div></a></div>
+                         <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150926165?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (4).png" alt="Skin Care"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Skin Care</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925456?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (26).png" alt="Falcon"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Falcon</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925231?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (6).png" alt="Perfume I"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Perfume I</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925836?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (10).png" alt="Hypnotic"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Hypnotic</h4><p>Perfume</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936149?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (24).png" alt="AI Concept 1"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>AI Concept 1</h4><p>AI Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936203?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (22).png" alt="Neural Data"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Neural Data</h4><p>AI Tech</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936594?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (12).png" alt="Eco Story"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Eco Story</h4><p>Documentary</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936244?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (23).png" alt="Virtual Mind"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Virtual Mind</h4><p>Futuristic</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936311?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (21).png" alt="Cyber City"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Cyber City</h4><p>AI World</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936389?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (17).png" alt="Neon Dreams"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Neon Dreams</h4><p>AI Art</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936404?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (14).png" alt="Circuit Flow"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Circuit Flow</h4><p>Technology</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925016?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (29).png" alt="Burberry"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Burberry</h4><p>Luxury</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925049?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (34).png" alt="Dubai Underground"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Dubai Underground</h4><p>Travel</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925155?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (8).png" alt="Vertical Ad"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Vertical Ad</h4><p>Mobile</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925123?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (13).png" alt="Celebration"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Celebration</h4><p>Event</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924941?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (33).png" alt="Barbie x Theobroma"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Barbie x Theobroma</h4><p>Special</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925085?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (20).png" alt="Visual Art"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Visual Art</h4><p>Creative</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924251?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (27).png" alt="Tech Lab"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Tech Lab</h4><p>Showcase</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150638677?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (16).png" alt="Creative"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Creative</h4><p>Showcase</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924392?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (19).png" alt="Portrait"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Portrait</h4><p>Fashion</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925947?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (1).png" alt="Pizza Special"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pizza Special</h4><p>Food Promo</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150637347?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (15).png" alt="Creative Clip"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Creative Clip</h4><p>Visuals</p></div></div></div></a></div>
+
+                    </div>
+                </div>
+
+                <div id="adfilms" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924403?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (18).png" alt="Cinematic Clip"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Cinematic Clip</h4><p>Commercial</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924373?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (25).png" alt="Lifestyle Ad"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Lifestyle Ad</h4><p>Commercial</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924440?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (7).png" alt="Ladybird"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Ladybird</h4><p>Nature Doc</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924464?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (2).png" alt="Prathi Sarees"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Prathi Sarees</h4><p>Fashion</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924504?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (5).png" alt="Event Highlight"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Event Highlight</h4><p>Coverage</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150637605?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1.png" alt="Defender"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Defender</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150617315?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (9).png" alt="iPhone Concept"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>iPhone Concept</h4><p>Tech Ad</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925789?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (11).png" alt="Pepsi"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pepsi</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924971?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (31).png" alt="Baskin Robbins"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baskin Robbins</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150637167?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (32).png" alt="Baggit"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baggit</h4><p>Fashion</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925252?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (30).png" alt="Deeponde Serum"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Deeponde Serum</h4><p>Cosmetics</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925887?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (3).png" alt="Pizza"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pizza</h4><p>Ad Film</p></div></div></div></a></div>
+                         <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150926165?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (4).png" alt="Skin Care"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Skin Care</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925456?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (26).png" alt="Falcon"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Falcon</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925231?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (6).png" alt="Perfume I"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Perfume I</h4><p>Ad Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925836?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (10).png" alt="Hypnotic"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Hypnotic</h4><p>Perfume</p></div></div></div></a></div>
+                    </div>
+                </div>
+                
+                <div id="aifilms" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936149?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (24).png" alt="AI Concept 1"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>AI Concept 1</h4><p>AI Film</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936203?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (22).png" alt="Neural Data"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Neural Data</h4><p>AI Tech</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936244?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (23).png" alt="Virtual Mind"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Virtual Mind</h4><p>Futuristic</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936311?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (21).png" alt="Cyber City"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Cyber City</h4><p>AI World</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936389?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (17).png" alt="Neon Dreams"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Neon Dreams</h4><p>AI Art</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936404?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (14).png" alt="Circuit Flow"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Circuit Flow</h4><p>Technology</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150638677?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (16).png" alt="Creative"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Creative</h4><p>Showcase</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150637347?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (15).png" alt="Creative Clip"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Creative Clip</h4><p>Visuals</p></div></div></div></a></div>
+
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936594?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (12).png" alt="Hologram"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Hologram</h4><p>Visual FX</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924251?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (27).png" alt="Tech Lab"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Tech Lab</h4><p>Showcase</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925085?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (20).png" alt="Visual Art"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Visual Art</h4><p>Creative</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925155?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (8).png" alt="Vertical Ad"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Vertical Ad</h4><p>Mobile</p></div></div></div></a></div>
+                    </div>
+                </div>
+
+                <div id="promo" class="tab-pane fade">
+                    <div class="row">
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925947?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (1).png" alt="Pizza Special"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pizza Special</h4><p>Promotional</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925887?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (3).png" alt="Hot Pizza"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Hot Pizza</h4><p>Promotional</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925325?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1.png" alt="Defender"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Defender</h4><p>Auto Promo</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925456?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (26).png" alt="Falcon"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Falcon</h4><p>Auto Promo</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150617315?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (9).png" alt="iPhone"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>iPhone</h4><p>Tech Promo</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925789?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (11).png" alt="Pepsi"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Pepsi</h4><p>Drink Promo</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925231?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (6).png" alt="Perfume I"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Perfume I</h4><p>Luxury</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925836?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (10).png" alt="Hypnotic"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Hypnotic</h4><p>Luxury</p></div></div></div></a></div>
+                        
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150926165?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (4).png" alt="Skin Care"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Skin Care</h4><p>Beauty</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924392?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (19).png" alt="Portrait"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Portrait</h4><p>Fashion</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924403?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (18).png" alt="Cinematic Clip"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Cinematic Clip</h4><p>Commercial</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924373?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (25).png" alt="Lifestyle"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Lifestyle</h4><p>Commercial</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924464?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (2).png" alt="Prathi Sarees"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Prathi Sarees</h4><p>Fashion</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924440?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (7).png" alt="Ladybird"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Ladybird</h4><p>Nature Doc</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924971?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (31).png" alt="Baskin Robbins"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baskin Robbins</h4><p>Ice Cream</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924915?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (32).png" alt="Baggit"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Baggit</h4><p>Bags</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925016?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (29).png" alt="Burberry"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Burberry</h4><p>Luxury</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925049?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (34).png" alt="Dubai Underground"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Dubai Underground</h4><p>Travel</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925123?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (13).png" alt="Celebration"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Celebration</h4><p>Event</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924941?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (33).png" alt="Barbie x Theobroma"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Barbie x Theobroma</h4><p>Special</p></div></div></div></a></div>
+                    </div>
+                </div>
+
+                <div id="corporate" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925456?autoplay=1">
+                                <div class="work-card">
+                                     <div class="hover-wrapper">
+                                        <img src="assets/images/1 (26).png" alt="Falcon">
+                                        <div class="overlay-content">
+                                            <div class="play-icon"><i class="fa fa-play-circle"></i></div>
+                                            <h4>Falcon</h4><p>Corporate Profile</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924504?autoplay=1">
+                                <div class="work-card">
+                                     <div class="hover-wrapper">
+                                        <img src="assets/images/1 (5).png" alt="Event Highlight">
+                                        <div class="overlay-content">
+                                            <div class="play-icon"><i class="fa fa-play-circle"></i></div>
+                                            <h4>Event Highlight</h4><p>Corporate Event</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                             <a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150924464?autoplay=1">
+                                <div class="work-card">
+                                     <div class="hover-wrapper">
+                                        <img src="assets/images/1 (2).png" alt="Prathi Sarees">
+                                        <div class="overlay-content">
+                                            <div class="play-icon"><i class="fa fa-play-circle"></i></div>
+                                            <h4>Prathi Sarees</h4><p>Brand Story</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="explainers" class="tab-pane fade">
+                      
+                </div>
+                
+                <div id="docs" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150925155?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (8).png" alt="Vertical Ad"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Vertical Ad</h4><p>Mobile</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936594?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (12).png" alt="Eco Story"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Eco Story</h4><p>Documentary</p></div></div></div></a></div>
+                        <div class="col-md-3 col-sm-6"><a href="javascript:void(0)" class="work-card-link lightbox-trigger" data-video-src="https://player.vimeo.com/video/1150936404?autoplay=1"><div class="work-card"><div class="hover-wrapper"><img src="assets/images/1 (14).png" alt="Urban Life"><div class="overlay-content"><div class="play-icon"><i class="fa fa-play-circle"></i></div><h4>Urban Life</h4><p>Documentary</p></div></div></div></a></div>
+                    </div>
+                </div>
+
+                <div id="social" class="tab-pane fade">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <div class="custom-container">
+            <div class="services-container-bg">
+                <div class="service-header">
+                    <span class="service-sub-tag">[ Our Services ]</span>
+                    <h2>Our AI Video Ad Services</h2>
+                    <p>High-performing video ads built with AI to drive clicks, leads, and sales—fast and cost-effective.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/Ad Films.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Ad Films</h4>
+                                <p>Cinematic films created to build strong brand recall and deliver impactful messaging for product launches.</p>
+                                <span class="watermark-number">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI Films.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>AI Films</h4>
+                                <p>Futuristic storytelling and scalable video production using advanced AI-assisted creative workflows.</p>
+                                <span class="watermark-number">2</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-sm-block"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI Voiceovers.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>AI Voice Overs</h4>
+                                <p>Natural-sounding AI voice overs in multiple languages and accents for advertisements and explainers.</p>
+                                <span class="watermark-number">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI promotional and Branding.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Promotional Videos</h4>
+                                <p>Designed to increase brand awareness and engagement across digital and social media platforms.</p>
+                                <span class="watermark-number">4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-sm-block"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI Corporate Films.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Corporate Films</h4>
+                                <p>Communicate company vision, values, and operations to internal and external stakeholders.</p>
+                                <span class="watermark-number">5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI Product explainer Videos.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Product Explainers</h4>
+                                <p>Simplify complex products or services to improve understanding and support customer conversions.</p>
+                                <span class="watermark-number">6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                    <div class="clearfix visible-sm-block"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/AI Documentary.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Documentaries</h4>
+                                <p>Capturing real stories and factual records with high production value and engaging narrative structures.</p>
+                                <span class="watermark-number">7</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <div class="service-img" style="background-image: url('assets/images/architecture.png'); background-size: cover; background-position: center;"></div>
+                            <div class="service-text">
+                                <h4>Architectural</h4>
+                                <p>3D walkthroughs, visualizations, and cinematic tours for real estate and construction projects.</p>
+                                <span class="watermark-number">8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer-contact" class="footer-section">
+        <div class="custom-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="Ads AI Footer Logo">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row"><div class="col-md-12"><div class="footer-divider"></div></div></div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-6 footer-col">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <ul class="footer-ul">
+                                <li><a href="#home">Home</a></li>
+                                <li><a href="#works">Portfolio</a></li>
+                                <li><a href="#services">Services</a></li>
+                                <li><a href="#footer-contact">Contact</a></li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 footer-col">
+                    <h4 class="footer-heading">Contact Us</h4>
+                    <div class="contact-info">
+                        <p>
+                            <i class="fa fa-map-marker"></i>
+                            <a href="https://maps.google.com/?q=Smily+Kiddos+Private+Limited+Moulaali+Hyderabad" target="_blank">
+                                Address: Hollywood Digital VFX Studios Pvt. Ltd.
+2nd Floor, Plot A-11,
+Moula Ali Industrial Area, Near Rotomaker,
+Hyderabad, Medchal–Malkajgiri,
+Telangana – 500040, India
+                            </a>
+                        </p>
+                        <p>
+                            <i class="fa fa-whatsapp"></i>
+                            <a href="tel:+919133187000">+91 9133187000</a>, <a href="tel:+919052204000">+91 9052204000</a>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope"></i>
+                            <span style="display:inline-block;">
+                                <a href="mailto:business@adsai.ai">business@adsai.ai</a><br>
+                                <a href="mailto:neha@adsai.ai">neha@adsai.ai</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-sm-12 footer-col">
+                    <div class="footer-search-wrapper">
+                        <i class="fa fa-search footer-search-icon"></i>
+                        <input type="email" class="footer-search-input" placeholder="Enter your email ...">
+                        <button class="footer-search-btn">Search</button>
+                    </div>
+                    
+                    <h4 class="footer-heading" style="margin-top: 30px;">Join Us</h4>
+                    <div class="social-icons">
+                        <a href="https://youtube.com/@adsai_official"><i class="fa fa-youtube-play"></i></a>
+                        <a href="https://www.facebook.com/people/Ads-AI/61584779031784/"><i class="fa fa-facebook"></i></a>
+                        <a href="https://x.com/AdsAi_official"><i class="fa fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/adsai_official/"><i class="fa fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/adsai-ai/"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright-area">Copyright © 2025 ADSAI.
+          <br>Copyright © 2025 Hollywood Digital VFX Studios Pvt. Ltd.</div>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="videoLightbox" class="lightbox-modal">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <div class="lightbox-prev" onclick="changeVideo(-1)">❮</div>
+        <div class="lightbox-content">
+            <div class="video-container">
+                <iframe id="lightboxIframe" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="lightbox-next" onclick="changeVideo(1)">❯</div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    
+    <script>
+        var currentVideoList = [];
+        var currentIndex = 0;
+        var modal = document.getElementById("videoLightbox");
+        var iframe = document.getElementById("lightboxIframe");
+
+        $(document).on('click', '.lightbox-trigger', function(e) {
+            e.preventDefault();
+            currentVideoList = [];
+            // Dynamically find triggers inside the currently active tab
+            $('.tab-pane.active .lightbox-trigger').each(function() {
+                currentVideoList.push($(this).attr('data-video-src'));
+            });
+            var clickedSrc = $(this).attr('data-video-src');
+            currentIndex = currentVideoList.indexOf(clickedSrc);
+            loadVideo(clickedSrc);
+            modal.style.display = "block";
+            $('body').css('overflow', 'hidden');
+        });
+
+        function closeLightbox() {
+            modal.style.display = "none";
+            iframe.src = "";
+            $('body').css('overflow', 'auto');
+        }
+
+        function loadVideo(src) { iframe.src = src; }
+
+        function changeVideo(direction) {
+            currentIndex += direction;
+            if (currentIndex >= currentVideoList.length) currentIndex = 0;
+            else if (currentIndex < 0) currentIndex = currentVideoList.length - 1;
+            loadVideo(currentVideoList[currentIndex]);
+        }
+
+        window.onclick = function(event) { if (event.target == modal) closeLightbox(); }
+
+        // --- ADDED: Close mobile menu when a link is clicked ---
+        $('.navbar-nav>li>a').on('click', function(){
+            $('.navbar-collapse').collapse('hide');
+        });
+    </script>
+
+</body>
+</html>

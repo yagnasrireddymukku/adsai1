@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Ads Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+
+@keyframes infinite-scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); } 
+    }
+
+    .animate-infinite-scroll {
+        animation: infinite-scroll 20s linear infinite;
+        display: flex;
+        width: max-content;
+    }
+
+    .animate-infinite-scroll:hover {
+        animation-play-state: paused;
+    }
+
+        .dot-bg {
+            background-color: #ffffff;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .video-aspect-ratio {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+        }
+        .video-aspect-ratio iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom bullet style to match image */
+        .custom-list li::before {
+            content: "•";
+            color: #94a3b8; /* Light gray dot */
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+
+
+        /* Blinking Pulse Animation */
+    @keyframes sonar-pulse {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(2.5); opacity: 0; }
+    }
+    .dot-pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #f26522;
+        border-radius: 50%;
+        animation: sonar-pulse 2s infinite;
+        z-index: 0;
+    }
+
+    /* The continuous orange line spanning the whole section */
+    .workflow-line-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .workflow-line-container::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #f26522;
+        z-index: 0;
+    }
+
+    /* Reveal transition for scroll animation */
+    .workflow-card {
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (max-width: 1024px) {
+        .workflow-line-container::before {
+            display: none; /* Hide line on mobile when cards stack */
+        }
+    }
+
+
+    .project-card {
+        transition: transform 0.3s ease;
+    }
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
+    .play-btn-overlay {
+        background: rgba(242, 101, 34, 0.9);
+        transition: all 0.3s ease;
+    }
+    .project-card:hover .play-btn-overlay {
+        background: rgba(242, 101, 34, 1);
+        scale: 1.1;
+    }
+
+    /* Responsive Title Sizing */
+    .responsive-title {
+        /* This scales the font between 1.5rem (mobile) and 2.5rem (desktop) */
+        font-size: clamp(1.5rem, 5vw, 2.25rem);
+        line-height: 1.2;
+    }
+
+    /* Flexible Underline */
+    .title-underline-wrapper {
+        display: inline-block;
+        position: relative;
+        padding-bottom: 12px;
+    }
+
+    .title-underline-wrapper::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #f26522;
+    }
+
+    /* Hover animation for industry cards */
+    .industry-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .industry-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .icon-box {
+        transition: all 0.3s ease;
+        background-color: transparent;
+    }
+
+    .industry-card:hover .icon-box {
+        background-color: #fffaf8;
+        border-color: #f26522;
+        box-shadow: 0 10px 15px -3px rgba(242, 101, 34, 0.1);
+    }
+
+/* Pure CSS for the entrance animation (No JS needed) */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-on-load {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Avatar Stack Overlap */
+    .avatar-stack img {
+        margin-left: -12px;
+        transition: transform 0.3s ease;
+    }
+    .avatar-stack img:first-child { margin-left: 0; }
+    .avatar-stack img:hover { transform: translateY(-5px); z-index: 10; }
+
+    /* Icon Pulse Animation */
+    .icon-box-pulse:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+
+    /* FAQ Specific Transitions */
+    .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-item.active .faq-content {
+        max-height: 300px; /* Adjust based on content length */
+        padding-bottom: 1.5rem;
+    }
+    .faq-icon-toggle {
+        transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-icon-toggle {
+        transform: rotate(180deg);
+    }
+
+/* Responsive Floating Animations */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-bounce-slow { animation: bounce-slow 4s ease-in-out infinite; }
+
+    /* Fix for mobile navbar top positioning */
+    @media (max-width: 768px) {
+        nav { top: 20px !important; height: 70px !important; }
+    }
+
+    /* Custom Urbanist NavLink Styles */
+        .nav-link {
+            font-family: 'Urbanist';
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 100%;
+            vertical-align: middle;
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+        .nav-link.active { color: #F45B26; }
+        .nav-link:hover { color: #F45B26; }
+
+        /* Floating Navbar container */
+/* --- Updated Responsive Navbar & Logo Styles --- */
+    .floating-nav {
+        width: min(1500px, 95%);
+        height: 87px;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 43px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 0.5px solid rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(50px);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    /* Logo text/image: Responsive sizing */
+    .logo-text {
+        font-size: 1.25rem; /* Smaller for mobile */
+        color: white;
+        font-weight: 700;
+    }
+
+    /* Desktop Overrides */
+    @media (min-width: 1024px) {
+        .logo-text {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        #mobile-menu { top: 90px; }
+    }
+
+        .logo-img {
+            width: 154.02px;
+            height: 52.23px;
+            object-fit: contain;
+        }
+
+        /* Contact Button Styling */
+        .contact-btn {
+            width: 147px;
+            height: 56px;
+            border-radius: 40px;
+            padding: 14px 24px;
+            background: #F45B26;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .contact-text {
+            width: 99px;
+            height: 28px;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 28px;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        /* Dropdown Logic */
+        .services-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            min-width: 280px;
+            z-index: 1001;
+        }
+        .group:hover .services-dropdown { display: grid; grid-template-columns: 1fr; gap: 8px; }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none; /* Default */
+}
+
+#mobile-menu:not(.hidden) {
+    display: flex; /* Overrides hidden */
+}
+/* Ensure hamburger icon stays on top of the menu */
+#hamburger {
+    position: relative;
+    z-index: 110;
+}
+
+
+/* Ensure mobile menu doesn't show by default */
+#mobile-menu.hidden {
+    display: none;
+}
+
+#mobile-menu:not(.hidden) {
+    display: flex;
+}
+
+/* Fix mobile nav height on small screens */
+@media (max-width: 768px) {
+    .floating-nav {
+        top: 15px !important;
+        height: 70px !important;
+    }
+}
+
+        #mobile-menu.active { transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .logo-img { width: 100px; height: 35px; }
+            .contact-btn { display: none; }
+        }
+
+        body { font-family: 'Urbanist', sans-serif; overflow-x: hidden; }
+
+        /* CSS Ticker Animation */
+@keyframes ticker-up {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-75%); } /* Adjust based on amount of numbers */
+}
+
+.animate-ticker-up {
+    animation: ticker-up 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Responsiveness for small screens */
+@media (max-width: 1024px) {
+    .lg\:block { display: none !important; } /* Hide fixed-layout cards on tablet/mobile */
+}
+
+/* Mobile Menu Dropdown Style */
+#mobile-menu {
+    position: fixed;
+    top: 85px; /* Adjust based on your navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1500px, 95%); /* Matches navbar width */
+    height: auto;
+    max-height: 80vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    z-index: 99;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+/* Align links to the left */
+.mobile-nav-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns elements to the left */
+    gap: 20px;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    #mobile-menu.hidden {
+        display: none;
+    }
+}
+
+/* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+
+        body { font-family: 'Urbanist', sans-serif; overflow-x: hidden; background-color: #ffffff; }
+
+        /* --- Animations --- */
+        @keyframes infinite-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .animate-infinite-scroll { animation: infinite-scroll 20s linear infinite; display: flex; width: max-content; }
+        .animate-infinite-scroll:hover { animation-play-state: paused; }
+
+        @keyframes sonar-pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+        .dot-pulse { position: absolute; width: 100%; height: 100%; background-color: #f26522; border-radius: 50%; animation: sonar-pulse 2s infinite; z-index: 0; }
+
+        @keyframes ticker-up { 0% { transform: translateY(0); } 100% { transform: translateY(-75%); } }
+        .animate-ticker-up { animation: ticker-up 8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+
+        /* --- Navbar Styles --- */
+.floating-nav {
+    width: min(1500px, 95%);
+    height: 87px;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 43px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(50px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+        .nav-link { font-weight: 600; font-size: 20px; color: #000000; transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: #F45B26; }
+
+        .services-dropdown {
+            display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 20px;
+            padding: 15px; min-width: 280px; z-index: 1001;
+        }
+        .group:hover .services-dropdown { display: grid; grid-template-columns: 1fr; gap: 4px; }
+
+        /* --- Utilities --- */
+        .dot-bg { background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 24px 24px; }
+        .video-aspect-ratio { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .video-aspect-ratio iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        @media (max-width: 1024px) {
+            #mobile-menu { top: 100px; }
+        }
+
+/* Logo Pill: Snap between exact desktop size and small mobile size */
+.logo-pill { 
+    width: 298px; 
+    height: 75px; 
+    border-radius: 92px; 
+    background: #F45B26; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.logo-text { font-size: 1.5rem; color: white; font-weight: 700; text-transform: uppercase; }
+
+/* Mobile Menu Dropdown Card */
+#mobile-menu {
+    position: fixed;
+    top: 130px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1500px, 95%);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+
+@media (max-width: 1024px) {
+    .floating-nav { 
+        height: 60px; /* Slim navbar for mobile */
+        top: 15px; 
+        padding: 0 12px;
+        border-radius: 30px;
+    }
+    .logo-pill { 
+        width: 140px; /* Smaller Logo for mobile */
+        height: 40px; 
+        padding: 0 15px;
+    }
+    .logo-text { font-size: 1rem; }
+    #mobile-menu { top: 85px; } /* Dropdown sits below slim navbar */
+}
+
+
+/* --- Logo Image Styling --- */
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Prevents the logo from stretching */
+    padding: 5px;
+}
+
+/* Updated Responsive Logo Pill */
+.logo-pill { 
+    width: 298px; 
+    height: 75px; 
+    border-radius: 92px; 
+    background: #F45B26; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    transition: all 0.3s ease;
+    overflow: hidden; /* Keeps the image inside the rounded pill */
+}
+
+@media (max-width: 1024px) {
+    .logo-pill { 
+        width: 140px; 
+        height: 40px; 
+        padding: 0 10px;
+    }
+}
+    </style>
+</head>
+
+
+<body class="bg-white">
+
+<nav class="fixed floating-nav flex items-center justify-between px-4 lg:px-10">
+    <a href="index.html" class="logo-pill hover:scale-105 transition-transform">
+        <img src="assets/images/logo.png" alt="Logo" class="logo-img">
+    </a>
+
+    <div class="hidden lg:flex items-center gap-10">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="relative group">
+            <a href="services.html" id="mobile-services-btn" class="nav-link text-xl font-bold flex items-center gap-2">
+    Services 
+    <svg id="services-chevron" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M19 9l-7 7-7-7"></path>
+    </svg>
+</a>
+            <div class="services-dropdown">
+                <a href="ai-ad.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Ad Films</a>
+                <a href="ai-films.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Films</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Voice Overs</a>
+                <a href="promotional-videos.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Promotional Videos</a>
+                <a href="corporate-films.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Corporate Films</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Product Explainers</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Documentary Videos</a>
+                <a href="#social-media.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Social Media Video Ads</a>
+            </div>
+        </div>
+        <a href="portfolio.html" class="nav-link">Portfolio</a>
+    </div>
+
+    <a href="contact.html" class="hidden lg:flex bg-[#F45B26] text-white px-8 py-3 rounded-full font-bold text-xl hover:scale-105 transition-all">Contact</a>
+
+    <button id="hamburger" class="lg:hidden p-2 text-black z-[110]">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+</nav>
+
+<div id="mobile-menu" class="hidden lg:hidden">
+    <div class="flex flex-col items-start gap-6">
+        <a href="index.html" class="nav-link text-xl font-bold active mobile-close">Home</a>
+        <a href="about.html" class="nav-link text-xl font-bold mobile-close">About</a>
+        <div class="w-full">
+            <a href="services.html" id="mobile-services-btn" class="nav-link text-xl font-bold flex items-center gap-2">
+    Services 
+    <svg id="services-chevron" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M19 9l-7 7-7-7"></path>
+    </svg>
+</a>
+            <div id="mobile-services-list" class="hidden flex-col gap-3 mt-3 ml-4 border-l-2 border-orange-100 pl-4">
+                <a href="ai-ad.html" class="text-base font-semibold text-gray-600 mobile-close">AI Ad Films</a>
+                <a href="ai-films.html" class="text-base font-semibold text-gray-600 mobile-close">AI Films</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">AI Voice Overs</a>
+                <a href="promotional-videos.html" class="text-base font-semibold text-gray-600 mobile-close">Promotional Videos</a>
+                <a href="corporate-films.html" class="text-base font-semibold text-gray-600 mobile-close">Corporate Films</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">Product Explainers</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">Documentary Videos</a>
+                <a href="social-media.html" class="text-base font-semibold text-gray-600 mobile-close">Social Media Video Ads</a>
+            </div>
+        </div>
+        <a href="portfolio.html" class="nav-link text-xl font-bold mobile-close">Portfolio</a>
+        <a href="contact.html" class="bg-[#F45B26] text-white px-8 py-3 rounded-full text-lg font-bold mobile-close shadow-lg shadow-orange-100">Contact Us</a>
+    </div>
+</div>
+
+    <header class="relative w-full overflow-hidden pt-[90px] md:pt-[120px] lg:pt-[160px] pb-12 lg:pb-24 flex flex-col justify-center min-h-fit md:min-h-[80vh] lg:min-h-screen">
+        <div class="absolute inset-0 z-0">
+            <video class="w-full h-full object-cover" autoplay muted loop playsinline><source src="assets/images/video.mp4" type="video/mp4"></video>
+            <div class="absolute inset-0 bg-white/70 backdrop-blur-[1px]"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-[1500px] mx-auto px-6 lg:px-[100px] grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            
+            <div class="flex flex-col items-start">
+                <div class="flex items-center gap-4 mb-6 lg:mb-10 overflow-hidden mx-auto lg:mx-0" 
+                     style="width: clamp(260px, 95vw, 477px); height: 56px; lg:height: 67px; border-radius: 124.22px; border: 1.25px solid #FFFFFF; background: rgba(255, 255, 255, 0.16); backdrop-filter: blur(62.7px); padding: 0 16px;">
+                    <div class="flex -space-x-3">
+                        <img src="assets/images/h1.png" style="width: 32px; height: 32px; lg:width: 44px; lg:height: 44px; border-radius: 124px; border: 1.25px solid #FFFFFF; object-fit: cover;">
+                        <img src="assets/images/h2.png" style="width: 32px; height: 32px; lg:width: 44px; lg:height: 44px; border-radius: 124px; border: 1.25px solid #FFFFFF; object-fit: cover;">
+                        <img src="assets/images/h3.png" style="width: 32px; height: 32px; lg:width: 44px; lg:height: 44px; border-radius: 124px; border: 1.25px solid #FFFFFF; object-fit: cover;">
+                    </div>
+                    <div class="h-6 w-[1.25px] bg-gray-300 mx-1"></div>
+                    <span style="font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: clamp(14px, 4vw, 24px); color: #F45B26;">20K+</span>
+                    <div class="flex items-center gap-1 text-[#F45B26] text-xs">★★★★★</div>
+                    <span style="font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: clamp(10px, 3.5vw, 17px); color: #252E3D; margin-left: auto;">5.0 Rating</span>
+                </div>
+
+                <h1 class="text-slate-900 uppercase tracking-tighter text-center lg:text-left mx-auto lg:mx-0" 
+                    style="font-family: 'Gotham', 'Arial Black', sans-serif; font-weight: 900; font-size: clamp(2.2rem, 10vw, 80px); line-height: 1; width: 100%; max-width: 883px; margin-bottom: 20px;">
+                    Scale Your Brand <br class="hidden lg:block">
+                    With <span class="text-[#F45B26]">AI Video</span>
+                </h1>
+
+                <p class="text-slate-600 mb-8 lg:mb-12 text-center lg:text-left mx-auto lg:mx-0" style="font-family: 'Urbanist', sans-serif; font-weight: 400; font-size: clamp(14px, 4.5vw, 18px); line-height: 1.4; max-width: 637px;">
+                    Create impactful advertising films, AI-driven videos, corporate films, and social media video ads designed to engage audiences and deliver measurable results.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 w-full lg:w-auto">
+                    <div class="flex items-center group cursor-pointer">
+                        <button style="background: #F45B26; width: 230px; height: 52px; border-radius: 69.19px; color: white; font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 18px;" class="hover:bg-orange-600 transition-all z-10 shadow-lg pr-8">Explore Our Services</button>
+                        <div class="bg-slate-900 p-3 rounded-full -ml-8 z-20 border-4 border-white shadow-lg">
+                            <svg class="w-5 h-5 text-white transform rotate-[-45deg]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </div>
+                    </div>
+                    <button style="border: 1.25px solid #F45B26; width: 240px; height: 52px; border-radius: 69.19px; color: #F45B26; font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 10px;" class="hover:bg-orange-50 transition-all">
+                        See How It Works <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative h-[250px] lg:h-[480px] w-full hidden lg:block">
+                <div style="width: 258px; height: 134px; border-radius: 12px; background: #FFFFFF; position: absolute; bottom: 154px; right: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden;">
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.56; position: absolute; top: 15px; left: 215px;"></div>
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.2; position: absolute; top: 32px; left: 228px;"></div>
+                    <div class="ticker-container" style="position: absolute; left: 16px; top: 10px; height: 64px; overflow: hidden;">
+                        <div class="animate-ticker-up" style="font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 64px; color: #252E3D;">01+<br>05+<br>15+<br>20+</div>
+                    </div>
+                    <div style="position: absolute; top: 97px; left: 16px; font-size: 18px; color: #252E3D;">Countries</div>
+                </div>
+
+                <div style="width: 258px; height: 134px; border-radius: 12px; background: #FFFFFF; position: absolute; bottom: 0; right: 280px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden;">
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.56; position: absolute; top: 15px; left: 215px;"></div>
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.2; position: absolute; top: 32px; left: 228px;"></div>
+                    <div class="ticker-container" style="position: absolute; left: 16px; top: 10px; height: 64px; overflow: hidden;">
+                        <div class="animate-ticker-up" style="font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 64px; color: #252E3D; animation-delay: 0.5s;">01+<br>30+<br>60+<br>100+</div>
+                    </div>
+                    <div style="position: absolute; top: 97px; left: 16px; font-size: 18px; color: #252E3D;">Companies</div>
+                </div>
+
+                <div style="width: 258px; height: 134px; border-radius: 12px; background: #F45B26; position: absolute; bottom: 0; right: 0; box-shadow: 0 15px 35px rgba(244, 91, 38, 0.25); overflow: hidden;">
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.8; position: absolute; top: 15px; left: 215px;"></div>
+                    <div style="width: 14px; height: 14px; background: #D9D9D9; opacity: 0.4; position: absolute; top: 32px; left: 228px;"></div>
+                    <div class="ticker-container" style="position: absolute; left: 16px; top: 10px; height: 64px; overflow: hidden;">
+                        <div class="animate-ticker-up" style="font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 64px; color: #FFFFFF;">40k<br>60k<br>80k<br>90k</div>
+                    </div>
+                    <div style="position: absolute; top: 97px; left: 16px; font-size: 18px; color: #FFFFFF;">Clients</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+<section class="w-full bg-white py-10 overflow-hidden border-b border-gray-100">
+    <div class="text-center mb-6">
+        <h3 class="text-gray-400 font-semibold tracking-[0.2em] uppercase text-[10px] md:text-xs">
+            Trusted by Industry Leaders
+        </h3>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl overflow-hidden px-4">
+        <div class="flex whitespace-nowrap animate-infinite-scroll items-center gap-12 md:gap-16">
+            <img src="assets/images/aha.png" alt="Zapfast" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/assemblage.png" alt="Optimal" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/Hollywood.png" alt="Vectra" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/imageexcel.png" alt="Grapho" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/info.png" alt="Signum" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            
+            <img src="assets/images/kalaraj.png" alt="Zapfast" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/KC.png" alt="Optimal" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/meta.png" alt="Vectra" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/mike.png" alt="Grapho" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+            <img src="assets/images/naughty kodi.png" alt="Signum" class="h-6 md:h-8 w-auto opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+        </div>
+        
+        <div class="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent"></div>
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent"></div>
+    </div>
+</section>
+
+<div class="dot-bg font-sans text-slate-700 antialiased">
+
+    <section id="ai-performance-section" class="max-w-7xl mx-auto px-6 py-20">
+        
+        <h2 class="text-center text-3xl md:text-4xl font-bold text-[#1e293b] mb-16">
+            AI Video Ads Built for Performance
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            
+            <div class="relative rounded-lg shadow-xl overflow-hidden bg-black">
+                <div class="video-aspect-ratio">
+                    <iframe 
+                        id="vimeo-video"
+                        src="https://player.vimeo.com/video/1162099522?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&muted=1&background=1" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div class="absolute top-6 left-6 z-10">
+                    <div class="bg-[#f26522] text-white font-bold text-xl md:text-2xl px-4 py-1 uppercase leading-tight">
+                        Leading the AI Video<br>Revolution.
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col text-left">
+                <p class="text-[17px] text-gray-500 mb-6 leading-relaxed max-w-2xl">
+                    We are a creative video and advertising studio offering end-to-end videoproduction services for brands, startups, agencies and enterprises.
+                </p>
+                <p class="text-[17px] text-gray-500 mb-8 leading-relaxed max-w-2xl">
+                    From concept development to final delivery, we help businesses communicate clearly, market effectively and grow consistently across digital platforms.
+                </p>
+
+                <div class="mb-8">
+                    <h3 class="font-bold text-lg text-slate-800 mb-4">Our expertise includes:</h3>
+                    <ul class="custom-list ml-5 space-y-3 text-[17px] text-gray-500">
+                        <li>Advertising & brand storytelling</li>
+                        <li>AI-enabled creative production</li>
+                        <li>Corporate and marketing communication</li>
+                        <li>Digital & social media video advertising</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <a href="services.html" class="inline-block bg-[#f26522] hover:bg-[#e45615] text-white font-medium px-10 py-3 rounded-full transition duration-300 shadow-md">
+                        View Our Services
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section id="services-grid" class="max-w-7xl mx-auto px-6 py-20 bg-white">
+    <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#1e293b] mb-4">
+            How AI Powers Every Ad
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+            High-performing video ads built with AI to drive clicks, leads, and sales—fast and cost-effective.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <a href="ai-ad.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/AI Ad Films.png" alt="AI Ad Films" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">AI Ad Films</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Cinematic films created to build strong brand recall and deliver impactful messaging for product launches.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">1</span>
+        </a>
+
+        <a href="ai-films.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/AI Films.jpg" alt="AI Films" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">AI Films</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Futuristic storytelling and scalable video production using advanced AI-assisted creative workflows.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">2</span>
+        </a>
+
+        <a href="ai-voice-overs.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/AI Voice Overs.jpg" alt="AI Voice Overs" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">AI Voice Overs</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Natural-sounding AI voice overs in multiple languages and accents for advertisements and explains.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">3</span>
+        </a>
+
+        <a href="promotional-videos.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/Promotional Videos.jpg" alt="Promotional Videos" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">Promotional Videos</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Designed to increase brand awareness and engagement across digital and social media platforms.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">4</span>
+        </a>
+
+        <a href="corporate-films.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/Corporate Films.jpg" alt="Corporate Films" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">Corporate Films</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Communicate company vision, values, and operations to internal and external stakeholders.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">5</span>
+        </a>
+
+        <a href="product-explainers.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/Product Explainers.jpg" alt="Product Explainers" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">Product Explainers</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Simplify complex products or services to improve understanding and support customer conversions.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">6</span>
+        </a>
+
+        <a href="documentary.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/Documentary Videos.jpg" alt="Documentary Videos" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">Documentary Videos</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">AI enhances documentary storytelling by automating research, scripting, and cinematic VFX.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">7</span>
+        </a>
+
+        <a href="social-media.html" class="group relative bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden block">
+            <div class="relative z-10">
+                <img src="assets/images/Social Media Video Ads.jpg" alt="Social Media Video Ads" class="w-full h-56 object-cover rounded-2xl mb-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#f26522] transition-colors">Social Media Video Ads</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">AI generates targeted, high-engagement ads for Instagram, YouTube, and Facebook.</p>
+            </div>
+            <span class="absolute bottom-[-10px] right-4 text-8xl font-black text-gray-50 opacity-80 pointer-events-none select-none">8</span>
+        </a>
+
+    </div>
+</section>
+
+
+<section id="workflow-section" class="w-full py-24 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="text-center mb-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#1e293b]">Our work Flow</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 lg:gap-y-0 relative">
+            
+            <div class="workflow-card opacity-0 translate-y-10 flex flex-col items-center text-center group" style="transition-delay: 100ms;">
+                <div class="w-48 h-32 bg-white rounded-2xl border border-gray-100 flex items-center justify-center shadow-sm mb-6 transition-all duration-300 group-hover:shadow-lg">
+                    <img src="assets/images/gif1.gif" alt="Discovery" class="w-16 h-16 object-contain">
+                </div>
+                
+                <div class="workflow-line-container justify-center mb-4">
+                    <div class="relative w-5 h-5 flex items-center justify-center">
+                        <div class="dot-pulse"></div>
+                        <div class="w-5 h-5 bg-[#f26522] rounded-full border-[5px] border-white z-10 shadow-sm"></div>
+                    </div>
+                </div>
+
+                <h3 class="text-[#f26522] font-bold text-xl mb-2">Discovery</h3>
+                <p class="text-gray-500 text-sm px-4">Understanding your objective and brief.</p>
+            </div>
+
+            <div class="workflow-card opacity-0 translate-y-10 flex flex-col items-center text-center group" style="transition-delay: 300ms;">
+                <div class="w-48 h-32 bg-white rounded-2xl border border-gray-100 flex items-center justify-center shadow-sm mb-6 transition-all duration-300 group-hover:shadow-lg">
+                    <img src="assets/images/gif2.gif" alt="Planning" class="w-16 h-16 object-contain">
+                </div>
+                
+                <div class="workflow-line-container justify-center mb-4">
+                    <div class="relative w-5 h-5 flex items-center justify-center">
+                        <div class="dot-pulse"></div>
+                        <div class="w-5 h-5 bg-[#f26522] rounded-full border-[5px] border-white z-10 shadow-sm"></div>
+                    </div>
+                </div>
+
+                <h3 class="text-[#f26522] font-bold text-xl mb-2">Planning</h3>
+                <p class="text-gray-500 text-sm px-4">Creative planning & concept development.</p>
+            </div>
+
+            <div class="workflow-card opacity-0 translate-y-10 flex flex-col items-center text-center group" style="transition-delay: 500ms;">
+                <div class="w-48 h-32 bg-white rounded-2xl border border-gray-100 flex items-center justify-center shadow-sm mb-6 transition-all duration-300 group-hover:shadow-lg">
+                    <img src="assets/images/gif3.gif" alt="Production" class="w-16 h-16 object-contain">
+                </div>
+                
+                <div class="workflow-line-container justify-center mb-4">
+                    <div class="relative w-5 h-5 flex items-center justify-center">
+                        <div class="dot-pulse"></div>
+                        <div class="w-5 h-5 bg-[#f26522] rounded-full border-[5px] border-white z-10 shadow-sm"></div>
+                    </div>
+                </div>
+
+                <h3 class="text-[#f26522] font-bold text-xl mb-2">Production</h3>
+                <p class="text-gray-500 text-sm px-4">AI-assisted production and editing.</p>
+            </div>
+
+            <div class="workflow-card opacity-0 translate-y-10 flex flex-col items-center text-center group" style="transition-delay: 700ms;">
+                <div class="w-48 h-32 bg-white rounded-2xl border border-gray-100 flex items-center justify-center shadow-sm mb-6 transition-all duration-300 group-hover:shadow-lg">
+                    <img src="assets/images/gif4.gif" alt="Delivery" class="w-16 h-16 object-contain">
+                </div>
+                
+                <div class="workflow-line-container justify-center mb-4">
+                    <div class="relative w-5 h-5 flex items-center justify-center">
+                        <div class="dot-pulse"></div>
+                        <div class="w-5 h-5 bg-[#f26522] rounded-full border-[5px] border-white z-10 shadow-sm"></div>
+                    </div>
+                </div>
+
+                <h3 class="text-[#f26522] font-bold text-xl mb-2">Delivery</h3>
+                <p class="text-gray-500 text-sm px-4">Review, refinement, & final delivery.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section id="latest-projects" class="max-w-7xl mx-auto px-6 py-20 bg-white">
+    <div class="mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#1e293b]">Latest projects</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="project-card flex flex-col group">
+            <div class="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 aspect-video mb-4">
+                <img src="assets/images/lp1.png" alt="iPhone Project" class="w-full h-full object-cover">
+                
+                <button onclick="playProjectVideo('vimeo-iphone', '1150617315')" class="absolute inset-0 flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
+                    <div class="play-btn-overlay w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg bg-[#F45B26]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 ml-1" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                    </div>
+                </button>
+
+                <div id="vimeo-iphone" class="absolute inset-0 hidden bg-black"></div>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">I Phone</h3>
+        </div>
+
+        <div class="project-card flex flex-col group">
+            <div class="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 aspect-video mb-4">
+                <img src="assets/images/lp2.png" alt="Defender Project" class="w-full h-full object-cover">
+                
+                <button onclick="playProjectVideo('vimeo-defender', '1150925325')" class="absolute inset-0 flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
+                    <div class="play-btn-overlay w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg bg-[#F45B26]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 ml-1" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                    </div>
+                </button>
+                <div id="vimeo-defender" class="absolute inset-0 hidden bg-black"></div>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Defender</h3>
+        </div>
+
+        <div class="project-card flex flex-col group">
+            <div class="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 aspect-video mb-4">
+                <img src="assets/images/lp3.png" alt="Ponds Project" class="w-full h-full object-cover">
+                
+                <button onclick="playProjectVideo('vimeo-ponds', '1150926165')" class="absolute inset-0 flex items-center justify-center group-hover:bg-black/20 transition-all duration-300">
+                    <div class="play-btn-overlay w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg bg-[#F45B26]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 ml-1" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                    </div>
+                </button>
+                <div id="vimeo-ponds" class="absolute inset-0 hidden bg-black"></div>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Ponds</h3>
+        </div>
+    </div>
+</section>
+
+
+<section id="industries-serve" class="w-full py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="text-center mb-20">
+            <div class="title-underline-wrapper">
+                <h2 class="responsive-title font-bold text-[#f26522] uppercase tracking-wider">
+                    Industries We Serve with
+                </h2>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 lg:gap-6">
+            
+            <div class="industry-card flex flex-col items-center text-center group">
+                <div class="icon-box w-28 h-28 mb-6 flex items-center justify-center rounded-3xl border border-gray-50 p-4">
+                    <img src="assets/images/icon1.png" alt="Brands" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-slate-800 font-bold text-lg leading-tight group-hover:text-[#f26522] transition-colors">
+                    Brands &<br>Enterprises
+                </h3>
+            </div>
+
+            <div class="industry-card flex flex-col items-center text-center group">
+                <div class="icon-box w-28 h-28 mb-6 flex items-center justify-center rounded-3xl border border-gray-50 p-4">
+                    <img src="assets/images/icon2.png" alt="Startups" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-slate-800 font-bold text-lg leading-tight group-hover:text-[#f26522] transition-colors">
+                    Startups &<br>SaaS
+                </h3>
+            </div>
+
+            <div class="industry-card flex flex-col items-center text-center group">
+                <div class="icon-box w-28 h-28 mb-6 flex items-center justify-center rounded-3xl border border-gray-50 p-4">
+                    <img src="assets/images/icon3.png" alt="Marketing" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-slate-800 font-bold text-lg leading-tight group-hover:text-[#f26522] transition-colors">
+                    Marketing<br>Agencies
+                </h3>
+            </div>
+
+            <div class="industry-card flex flex-col items-center text-center group">
+                <div class="icon-box w-28 h-28 mb-6 flex items-center justify-center rounded-3xl border border-gray-50 p-4">
+                    <img src="assets/images/icon4.png" alt="Ecommerce" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-slate-800 font-bold text-lg leading-tight group-hover:text-[#f26522] transition-colors">
+                    E-commerce &<br>D2C
+                </h3>
+            </div>
+
+            <div class="industry-card flex flex-col items-center text-center group">
+                <div class="icon-box w-28 h-28 mb-6 flex items-center justify-center rounded-3xl border border-gray-50 p-4">
+                    <img src="assets/images/icon5.png" alt="Gov" class="w-full h-full object-contain">
+                </div>
+                <h3 class="text-slate-800 font-bold text-lg leading-tight group-hover:text-[#f26522] transition-colors">
+                    Gov, Institutions<br>& NGOs
+                </h3>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section id="why-choose-us" class="w-full py-20 bg-[#f9fafb] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="space-y-8 animate-on-load">
+                <div>
+                    <span class="text-gray-400 font-medium tracking-[0.2em] uppercase text-sm mb-4 block">
+                        [ Why Choose Ads AI ]
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-[#1e293b] leading-tight mb-6">
+                        How Intelligence Powers Every Ad
+                    </h2>
+                    <p class="text-gray-500 text-lg leading-relaxed max-w-md">
+                        Our process is simple, transparent, and efficient, ensuring high-quality output at every stage.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-10 pt-4 border-t border-gray-200 lg:border-t-0">
+                    
+                    <div class="flex flex-col gap-3">
+                        <div class="avatar-stack flex items-center">
+                            <img src="assets/images/p1.jpg" alt="Client 1" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                            <img src="assets/images/p2.jpg" alt="Client 2" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                            <img src="assets/images/p3.jpg" alt="Client 3" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                            <img src="assets/images/p4.jpg" alt="Client 4" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                            <img src="assets/images/p5.jpg" alt="Client 5" class="w-12 h-12 rounded-full border-4 border-white object-cover shadow-sm">
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-slate-900 font-bold text-lg leading-none">Join Our 40k+</span>
+                            <span class="text-gray-500 text-sm">Satisfied World Clients</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white p-2 rounded-lg shadow-sm">
+                            <img src="assets/images/g1.png" alt="Global Company" class="w-10 h-10">
+                        </div>
+                        <div>
+                            <span class="text-slate-900 font-bold uppercase tracking-wide text-sm block">Global Company</span>
+                            <p class="text-gray-400 text-xs max-w-[190px] leading-relaxed">
+                                Our process is simple, transparent, and efficient, ensuring high-quality output at every stage.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12">
+                
+                <div class="animate-on-load space-y-4" style="animation-delay: 0.1s;">
+                    <img src="assets/images/g2.png" alt="Intelligent Insights" class="w-16 h-16 icon-box-pulse">
+                    <h4 class="text-xl font-bold text-slate-900">Intelligent Insights</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        AI-driven data analysis ensures every frame is optimized for maximum ROI.
+                    </p>
+                </div>
+
+                <div class="animate-on-load space-y-4" style="animation-delay: 0.3s;">
+                    <img src="assets/images/g3.png" alt="Rapid Delivery" class="w-16 h-16 icon-box-pulse">
+                    <h4 class="text-xl font-bold text-slate-900">Rapid Delivery</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Get studio-quality video ads in days, not weeks, using our AI-powered pipeline.
+                    </p>
+                </div>
+
+                <div class="animate-on-load space-y-4" style="animation-delay: 0.5s;">
+                    <img src="assets/images/g4.png" alt="Creative Edge" class="w-16 h-16 icon-box-pulse">
+                    <h4 class="text-xl font-bold text-slate-900">Creative Edge</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        AI analysis ensures your creative content stands out in a crowded market.
+                    </p>
+                </div>
+
+                <div class="animate-on-load space-y-4" style="animation-delay: 0.7s;">
+                    <img src="assets/images/g5.png" alt="Infinite Scale" class="w-16 h-16 icon-box-pulse">
+                    <h4 class="text-xl font-bold text-slate-900">Infinite Scale</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Effortlessly generate hundreds of ad variations for seamless A/B testing.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="faq-section" class="w-full py-20 bg-[#f9fafb]">
+    <div class="max-w-4xl mx-auto px-6">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-[#1e293b]">
+                Frequently asked questions
+            </h2>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+            
+            <div class="faq-item border-b border-gray-100 active">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-6 md:p-8 text-left group">
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/faq1.png" class="w-6 h-6 opacity-80" alt="Icon">
+                        <span class="text-lg font-bold text-[#f26522]">What type of video services do you offer?</span>
+                    </div>
+                    <span class="faq-icon-toggle text-2xl text-[#f26522] font-light">—</span>
+                </button>
+                <div class="faq-content px-12 md:px-20">
+                    <p class="text-gray-500 leading-relaxed">
+                        We offer advertising films, AI films, corporate films, promotional and branding videos, product explainer videos, documentaries, and social media video ads.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item border-b border-gray-100">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-6 md:p-8 text-left group">
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/faq2.png" class="w-6 h-6 opacity-60" alt="Icon">
+                        <span class="text-lg font-bold text-[#1e293b] group-hover:text-[#f26522] transition-colors">Do you use AI in video production?</span>
+                    </div>
+                    <span class="faq-icon-toggle text-2xl text-gray-300 font-light">+</span>
+                </button>
+                <div class="faq-content px-12 md:px-20">
+                    <p class="text-gray-500 leading-relaxed">
+                        Yes, we integrate advanced AI tools throughout our pipeline—from script assistance and concept generation to editing and AI-enabled voice-overs—to deliver high-performing ads faster.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item border-b border-gray-100">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-6 md:p-8 text-left group">
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/faq3.png" class="w-6 h-6 opacity-60" alt="Icon">
+                        <span class="text-lg font-bold text-[#1e293b] group-hover:text-[#f26522] transition-colors">Do you work with startups and small businesses?</span>
+                    </div>
+                    <span class="faq-icon-toggle text-2xl text-gray-300 font-light">+</span>
+                </button>
+                <div class="faq-content px-12 md:px-20">
+                    <p class="text-gray-500 leading-relaxed">
+                        Absolutely. We provide end-to-end video production services tailored for brands of all sizes, from startups and agencies to large enterprises.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item border-b border-gray-100">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-6 md:p-8 text-left group">
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/faq4.png" class="w-6 h-6 opacity-60" alt="Icon">
+                        <span class="text-lg font-bold text-[#1e293b] group-hover:text-[#f26522] transition-colors">Can you create videos for social media and digital marketing?</span>
+                    </div>
+                    <span class="faq-icon-toggle text-2xl text-gray-300 font-light">+</span>
+                </button>
+                <div class="faq-content px-12 md:px-20">
+                    <p class="text-gray-500 leading-relaxed">
+                        Yes, we specialize in digital & social media video advertising optimized for platforms like Instagram, YouTube, and LinkedIn to drive leads and sales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-6 md:p-8 text-left group">
+                    <div class="flex items-center gap-6">
+                        <img src="assets/images/faq5.png" class="w-6 h-6 opacity-60" alt="Icon">
+                        <span class="text-lg font-bold text-[#1e293b] group-hover:text-[#f26522] transition-colors">Do you handle the complete video production process?</span>
+                    </div>
+                    <span class="faq-icon-toggle text-2xl text-gray-300 font-light">+</span>
+                </button>
+                <div class="faq-content px-12 md:px-20">
+                    <p class="text-gray-500 leading-relaxed">
+                        From concept development and AI script assist to final delivery, we handle the entire process to help businesses market effectively and grow consistently.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section id="contact-section" class="max-w-7xl mx-auto px-6 py-20">
+    <div class="text-center mb-10">
+        <span class="text-gray-400 font-medium tracking-widest uppercase text-sm">[ Contact Us ]</span>
+    </div>
+
+    <div class="bg-[#f3f4f6] rounded-[2.5rem] p-4 md:p-12 overflow-hidden shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="space-y-8 p-4">
+                <div>
+                    <h4 class="text-[#f26522] text-xl font-semibold mb-4">Get in touch</h4>
+                    <hr class="border-gray-300 w-full mb-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
+                        Let's Create Something Epic
+                    </h2>
+                    <p class="text-gray-500 text-lg leading-relaxed">
+                        Ready to transform your brand with AI-powered video? Let's start the conversation.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-400 font-medium">Email:</p>
+                        <a href="mailto:neha@adsai.ai" class="text-slate-800 font-bold hover:text-[#f26522] transition-colors">neha@adsai.ai</a>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400 font-medium">Phone:</p>
+                        <a href="tel:+919133187000" class="text-slate-800 font-bold hover:text-[#f26522] transition-colors">+91 91331 87000</a>
+                    </div>
+                    <div>
+    <p class="text-sm text-gray-400 font-medium">Address:</p>
+    <a href="https://www.google.com/maps/search/?api=1&query=Hyderabad,+Telangana" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="text-slate-800 font-bold hover:text-[#f26522] transition-colors flex items-center gap-1 group">
+        <span>Hollywood Digital VFX Studios Pvt. Ltd.
+2nd Floor, Plot A-11,
+Moula Ali Industrial Area, Near Rotomaker,
+Hyderabad, Medchal–Malkajgiri,
+Telangana – 500040, India</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+    </a>
+</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-white">
+                <form action="#" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Name</label>
+                            <input type="text" placeholder="Adsai" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
+                            <input type="email" placeholder="neha@adsai.ai" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Mobile</label>
+                            <input type="tel" placeholder="+91 91331 87000" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Company</label>
+                            <input type="text" placeholder="Name" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">What are you looking for?</label>
+                        <select class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23f26522%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_1rem_center] bg-no-repeat">
+                            <option value="" disabled selected>Select a service</option>
+                            <option>AI Ad Films</option>
+                            <option>AI Films</option>
+                            <option>AI Voice Overs</option>
+                            <option>Promotional Videos</option>
+                            <option>Corporate Films</option>
+                            <option>Product Explainers</option>
+                            <option>Documentary Videos</option>
+                            <option>Social Media Video Ads</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                        <textarea rows="4" placeholder="Hello!" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#f26522] focus:ring-1 focus:ring-[#f26522] outline-none transition-all"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#f26522] hover:bg-[#e45615] text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-orange-200 flex items-center justify-center gap-2 group">
+                        Send Message
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="relative w-full bg-black py-16 md:py-24 px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <img src="assets/images/footer.png" 
+             alt="Footer Background" 
+             class="w-full h-full object-cover object-center md:object-bottom opacity-30 lg:opacity-50">
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-20">
+            
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Services</h3>
+                <div class="grid grid-cols-1 xs:grid-cols-2 gap-x-4">
+                    <ul class="space-y-4 text-gray-300 text-sm">
+                        <li><a href="ai-ad.html" class="hover:text-[#f26522] transition-colors">AI Ad Films</a></li>
+                        <li><a href="ai-films.html" class="hover:text-[#f26522] transition-colors">AI Films</a></li>
+                        <li><a href="ai-voice-overs" class="hover:text-[#f26522] transition-colors">AI Voice Overs</a></li>
+                        <li><a href="promotional-videos.html" class="hover:text-[#f26522] transition-colors">Promotional Videos</a></li>
+                    </ul>
+                    <ul class="space-y-4 text-gray-300 text-sm mt-4 xs:mt-0">
+                        <li><a href="corporate-films.html" class="hover:text-[#f26522] transition-colors">Corporate Films</a></li>
+                        <li><a href="product-explainers" class="hover:text-[#f26522] transition-colors">Product Explainers</a></li>
+                        <li><a href="documentary" class="hover:text-[#f26522] transition-colors">Documentary Videos</a></li>
+                        <li><a href="social-media.html" class="hover:text-[#f26522] transition-colors">Social Media Video Ads</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Quick Links</h3>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="about.html" class="hover:text-[#f26522] transition-colors">About</a></li>
+                    <li><a href="mailto:neha@adsai.ai" class="hover:text-[#f26522] transition-colors">Contact us: neha@adsai.ai</a></li>
+                    <li><a href="tel:+919133187000" class="hover:text-[#f26522] transition-colors">Call: +91 91331 87000</a></li>
+                    <li><a href="portfolio" class="hover:text-[#f26522] transition-colors">Portfolio</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Follow Us On :</h3>
+                <div class="flex flex-wrap items-center gap-5 md:gap-8">
+                    <a href="https://www.facebook.com/people/Ads-AI/61584779031784/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                    </a>
+                    <a href="https://x.com/AdsAi_official" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/adsai_official/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/adsai-ai/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 md:mt-24 pt-8 border-t border-gray-800/30 text-center sm:text-left">
+            <p class="text-gray-500 text-xs">
+                Copyright © 2026 Ads AI | All Rights Reserved
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuPath = document.getElementById('menu-path');
+            const mobileServicesBtn = document.getElementById('mobile-services-btn');
+            const mobileServicesList = document.getElementById('mobile-services-list');
+            const chevron = document.getElementById('services-chevron');
+
+            const closeMenu = () => {
+                mobileMenu.classList.add('hidden');
+                menuPath.setAttribute('d', "M4 6h16M4 12h16M4 18h16");
+                document.body.style.overflow = 'auto';
+            };
+
+            hamburger.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuPath.setAttribute('d', "M6 18L18 6M6 6l12 12");
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    closeMenu();
+                }
+            });
+
+            mobileServicesBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isListHidden = mobileServicesList.classList.contains('hidden');
+                mobileServicesList.classList.toggle('hidden');
+                mobileServicesList.classList.toggle('flex');
+                chevron.style.transform = isListHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+
+            document.querySelectorAll('.mobile-close').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        });
+
+        const vimeoIframe = document.querySelector('#vimeo-video');
+        const vimeoPlayer = new Vimeo.Player(vimeoIframe);
+        const sectionTarget = document.querySelector('#ai-performance-section');
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    vimeoPlayer.play().catch(err => console.log("Playback blocked"));
+                } else {
+                    vimeoPlayer.pause();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sectionObserver.observe(sectionTarget);
+
+   const flowObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const cards = entry.target.querySelectorAll('.workflow-card');
+                cards.forEach(card => {
+                    card.classList.remove('opacity-0', 'translate-y-10');
+                    card.classList.add('opacity-100', 'translate-y-0');
+                });
+                flowObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    flowObserver.observe(document.getElementById('workflow-section'));
+
+    function playProjectVideo(containerId, vimeoId) {
+        const container = document.getElementById(containerId);
+        container.classList.remove('hidden');
+        
+        container.innerHTML = `
+            <iframe 
+                src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowfullscreen 
+                style="width:100%; height:100%;">
+            </iframe>
+        `;
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const elements = entry.target.querySelectorAll('.feature-reveal');
+                elements.forEach(el => el.classList.add('active'));
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    const target = document.getElementById('why-choose-us');
+    if (target) statsObserver.observe(target);
+
+    function toggleFaq(button) {
+        const item = button.parentElement;
+        const toggleIcon = button.querySelector('.faq-icon-toggle');
+        const isActive = item.classList.contains('active');
+
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+            if (otherItem !== item) {
+                otherItem.classList.remove('active');
+                const otherBtn = otherItem.querySelector('.faq-icon-toggle');
+                otherBtn.innerText = '+';
+                otherBtn.classList.add('text-gray-300');
+                otherBtn.classList.remove('text-[#f26522]');
+            }
+        });
+
+        if (isActive) {
+            item.classList.remove('active');
+            toggleIcon.innerText = '+';
+            toggleIcon.classList.add('text-gray-300');
+            toggleIcon.classList.remove('text-[#f26522]');
+        } else {
+            item.classList.add('active');
+            toggleIcon.innerText = '—';
+            toggleIcon.classList.remove('text-gray-300');
+            toggleIcon.classList.add('text-[#f26522]');
+        }
+    }
+
+
+
+    function playProjectVideo(containerId, vimeoId) {
+    const container = document.getElementById(containerId);
+    container.classList.remove('hidden');
+    container.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+}
+</script>
+</body>
+</html>

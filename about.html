@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdsAI - AI Video Production</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Urbanist', sans-serif; overflow-x: hidden; background-color: #ffffff; margin: 0; }
+        html { scroll-behavior: smooth; }
+
+        /* --- Navbar Styles --- */
+        .floating-nav {
+            width: min(1500px, 95%);
+            height: 87px;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 43px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(50px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            font-family: 'Urbanist';
+            font-weight: 600;
+            font-size: 20px;
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link.active, .nav-link:hover { color: #F45B26; }
+
+        .logo-pill { 
+            width: 298px; 
+            height: 75px; 
+            border-radius: 92px; 
+            background: #F45B26; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .logo-img { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+
+        .services-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 15px;
+            min-width: 280px;
+            z-index: 1001;
+        }
+
+        .group:hover .services-dropdown { display: grid; grid-template-columns: 1fr; gap: 8px; }
+
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1500px, 95%);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            z-index: 99;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* --- Hero Height Fix --- */
+        header {
+            height: calc(var(--vh, 1vh) * 100);
+            display: flex;
+            align-items: center;
+            padding-top: 150px !important;
+        }
+
+        @media (max-width: 1024px) {
+            .logo-pill { width: 140px; height: 40px; }
+            .floating-nav { top: 15px !important; height: 70px !important; }
+            header { padding-top: 110px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="fixed floating-nav flex items-center justify-between px-4 lg:px-10">
+    <a href="index.html" class="logo-pill hover:scale-105 transition-transform">
+        <img src="assets/images/logo.png" alt="Logo" class="logo-img">
+    </a>
+
+    <div class="hidden lg:flex items-center gap-10">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="relative group">
+            <a href="services.html" id="mobile-services-btn" class="nav-link text-xl font-bold flex items-center gap-2">
+    Services 
+    <svg id="services-chevron" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M19 9l-7 7-7-7"></path>
+    </svg>
+</a>
+            <div class="services-dropdown">
+                <a href="ai-ad.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Ad Films</a>
+                <a href="ai-films.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Films</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">AI Voice Overs</a>
+                <a href="promotional-videos.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Promotional Videos</a>
+                <a href="corporate-films.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Corporate Films</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Product Explainers</a>
+                <a href="#" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Documentary Videos</a>
+                <a href="#social-media.html" class="p-2 hover:bg-orange-50 rounded-lg text-sm font-semibold">Social Media Video Ads</a>
+            </div>
+        </div>
+        <a href="portfolio.html" class="nav-link">Portfolio</a>
+    </div>
+
+    <a href="contact.html" class="hidden lg:flex bg-[#F45B26] text-white px-8 py-3 rounded-full font-bold text-xl hover:scale-105 transition-all">Contact</a>
+
+    <button id="hamburger" class="lg:hidden p-2 text-black z-[110]">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+</nav>
+
+<div id="mobile-menu" class="hidden lg:hidden">
+    <div class="flex flex-col items-start gap-6">
+        <a href="index.html" class="nav-link text-xl font-bold active mobile-close">Home</a>
+        <a href="about.html" class="nav-link text-xl font-bold mobile-close">About</a>
+        <div class="w-full">
+            <a href="services.html" id="mobile-services-btn" class="nav-link text-xl font-bold flex items-center gap-2">
+    Services 
+    <svg id="services-chevron" class="w-5 h-5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M19 9l-7 7-7-7"></path>
+    </svg>
+</a>
+            <div id="mobile-services-list" class="hidden flex-col gap-3 mt-3 ml-4 border-l-2 border-orange-100 pl-4">
+                <a href="ai-ad.html" class="text-base font-semibold text-gray-600 mobile-close">AI Ad Films</a>
+                <a href="ai-films.html" class="text-base font-semibold text-gray-600 mobile-close">AI Films</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">AI Voice Overs</a>
+                <a href="promotional-videos.html" class="text-base font-semibold text-gray-600 mobile-close">Promotional Videos</a>
+                <a href="corporate-films.html" class="text-base font-semibold text-gray-600 mobile-close">Corporate Films</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">Product Explainers</a>
+                <a href="#" class="text-base font-semibold text-gray-600 mobile-close">Documentary Videos</a>
+                <a href="social-media.html" class="text-base font-semibold text-gray-600 mobile-close">Social Media Video Ads</a>
+            </div>
+        </div>
+        <a href="portfolio.html" class="nav-link text-xl font-bold mobile-close">Portfolio</a>
+        <a href="contact.html" class="bg-[#F45B26] text-white px-8 py-3 rounded-full text-lg font-bold mobile-close shadow-lg shadow-orange-100">Contact Us</a>
+    </div>
+</div>
+
+
+<header class="relative w-full overflow-hidden flex flex-col justify-center min-h-screen bg-[#050a10]">
+    <div class="absolute inset-0 z-0">
+        <video class="w-full h-full object-cover opacity-40" autoplay muted loop playsinline>
+            <source src="assets/images/herovideo.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#050a10]/60 via-transparent to-[#050a10]"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-[1500px] mx-auto px-6 lg:px-[100px]">
+        <h1 class="text-white font-bold tracking-tight mb-8" style="font-size: clamp(2.2rem, 5.5vw, 4.8rem); line-height: 1.1;">
+            content that converts<br>requires your time, skills & resources<br>but worry not, we’ll handle it all for you
+        </h1>
+     <!--   <p class="text-gray-400 text-base md:text-lg font-medium max-w-2xl mb-12 opacity-90">
+            From cinematic films to automated scaling, we provide the intelligence behind the world's highest-performing ads.
+        </p>-->
+    </div>
+</header>
+
+<section class="py-20 bg-white overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-[100px]">
+        <div class="mb-16">
+            <span class="text-[#F45B26] font-bold text-lg tracking-widest">[ ABOUT US ]</span>
+            <h2 class="text-[#050a10] text-4xl md:text-6xl font-extrabold mt-4">How We Make It Work</h2>
+        </div>
+
+        <div class="relative">
+            <div class="flex flex-col lg:flex-row lg:justify-end mb-20 relative">
+                <div class="lg:w-1/2 pl-0 lg:pl-12 border-l-2 lg:border-l-0 lg:relative border-[#F45B26]/30">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">01/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Discovery Call</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">We begin with a strategic discovery call to deeply understand your brand vision, business goals, and growth expectations. This session helps us analyze your target audience, customer psychology, and market positioning.</p>
+                    
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-start mb-20 relative">
+                <div class="lg:w-1/2 pr-0 lg:pr-12 border-l-2 lg:border-l-0 border-[#F45B26]/30 pl-6 lg:pl-0">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">02/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Strategy</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">Based on insights gathered, we craft a performance-driven creative strategy designed for maximum impact. This includes market research, competitor analysis, and messaging clarity.</p>
+                </div>
+                
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-end mb-20 relative">
+                <div class="lg:w-1/2 pl-6 lg:pl-12 border-l-2 lg:border-l-0 border-[#F45B26]/30">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">03/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Creative Concept</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">We transform strategy into a compelling creative concept with a strong narrative and cinematic theme. This stage defines the story arc, visual language, and emotional tone of the film.</p>
+                    
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-start mb-20 relative">
+                <div class="lg:w-1/2 pr-0 lg:pr-12 border-l-2 lg:border-l-0 border-[#F45B26]/30 pl-6 lg:pl-0">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">04/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Pre-Production</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">During pre-production, we finalize scripts, AI visual direction, storyboards, and mood boards. We carefully plan voice tone, pacing, and visual flow for smooth execution.</p>
+                </div>
+                
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-end mb-20 relative">
+                <div class="lg:w-1/2 pl-6 lg:pl-12 border-l-2 lg:border-l-0 border-[#F45B26]/30">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">05/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Production</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">We produce ultra-high-quality AI-generated visuals with cinematic depth. This includes dynamic animations, motion sequences, and visually rich storytelling using advanced AI tools.</p>
+                    
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-start mb-20 relative">
+                <div class="lg:w-1/2 pr-0 lg:pr-12 border-l-2 lg:border-l-0 border-[#F45B26]/30 pl-6 lg:pl-0">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">06/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Post-Production</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">We enhance the film with expert editing, sound design, and AI-powered voice mastering. Color grading and cinematic effects elevate the final result to a professional finish.</p>
+                </div>
+                
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:justify-end relative">
+                <div class="lg:w-1/2 pl-6 lg:pl-12 border-l-2 lg:border-l-0 border-[#F45B26]/30">
+                    <div class="flex items-center gap-4 mb-2">
+                        <span class="text-[#F45B26] font-bold text-xl">07/07</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#050a10]">Delivery</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed max-w-xl">The final film is delivered in multiple formats optimized for Meta, YouTube, and Instagram. Assets are ready for immediate deployment across paid and organic channels.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="relative w-full bg-black py-16 md:py-24 px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <img src="assets/images/footer.png" 
+             alt="Footer Background" 
+             class="w-full h-full object-cover object-center md:object-bottom opacity-30 lg:opacity-50">
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-20">
+            
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Services</h3>
+                <div class="grid grid-cols-1 xs:grid-cols-2 gap-x-4">
+                    <ul class="space-y-4 text-gray-300 text-sm">
+                        <li><a href="ai-ad.html" class="hover:text-[#f26522] transition-colors">AI Ad Films</a></li>
+                        <li><a href="ai-films.html" class="hover:text-[#f26522] transition-colors">AI Films</a></li>
+                        <li><a href="ai-voice-overs" class="hover:text-[#f26522] transition-colors">AI Voice Overs</a></li>
+                        <li><a href="promotional-videos.html" class="hover:text-[#f26522] transition-colors">Promotional Videos</a></li>
+                    </ul>
+                    <ul class="space-y-4 text-gray-300 text-sm mt-4 xs:mt-0">
+                        <li><a href="corporate-films.html" class="hover:text-[#f26522] transition-colors">Corporate Films</a></li>
+                        <li><a href="product-explainers" class="hover:text-[#f26522] transition-colors">Product Explainers</a></li>
+                        <li><a href="documentary" class="hover:text-[#f26522] transition-colors">Documentary Videos</a></li>
+                        <li><a href="social-media.html" class="hover:text-[#f26522] transition-colors">Social Media Video Ads</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Quick Links</h3>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="about.html" class="hover:text-[#f26522] transition-colors">About</a></li>
+                    <li><a href="mailto:neha@adsai.ai" class="hover:text-[#f26522] transition-colors">Contact us: neha@adsai.ai</a></li>
+                    <li><a href="tel:+919133187000" class="hover:text-[#f26522] transition-colors">Call: +91 91331 87000</a></li>
+                    <li><a href="portfolio" class="hover:text-[#f26522] transition-colors">Portfolio</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="flex flex-col">
+                <h3 class="text-white text-xl font-bold mb-6 border-b border-[#f26522] pb-2 inline-block self-start">Follow Us On :</h3>
+                <div class="flex flex-wrap items-center gap-5 md:gap-8">
+                    <a href="https://www.facebook.com/people/Ads-AI/61584779031784/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                    </a>
+                    <a href="https://x.com/AdsAi_official" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/adsai_official/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/adsai-ai/" target="_blank" class="text-white hover:text-[#f26522] transition-all transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 md:mt-24 pt-8 border-t border-gray-800/30 text-center sm:text-left">
+            <p class="text-gray-500 text-xs">
+                Copyright © 2026 Ads AI | All Rights Reserved
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Navigation logic
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuPath = document.getElementById('menu-path');
+
+    hamburger.addEventListener('click', () => {
+        const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+        mobileMenu.style.display = isHidden ? 'block' : 'none';
+        menuPath.setAttribute('d', isHidden ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16");
+    });
+
+    // Mobile height fix
+    function fixHeroHeight(){
+        document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    }
+    window.addEventListener('resize', fixHeroHeight);
+    fixHeroHeight();
+</script>
+
+</body>
+</html>
